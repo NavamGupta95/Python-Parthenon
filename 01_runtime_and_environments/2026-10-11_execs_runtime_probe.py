@@ -1,76 +1,105 @@
-"""
+r"""
 2026-10-11_execs_runtime_probe.py
 =================================
-Lesson 01 Hands-on: Meeting Your Python Interpreter
+Lesson 01 Hands-On: Meeting Your Python Interpreter
 
 Theory Guide:
   ./2026-10-11_docs_execution_mechanics_and_environments.md
 
-HOW TO RUN THIS FILE:
-  Open your PowerShell terminal and type:
-  python 01_runtime_and_environments/2026-10-11_execs_runtime_probe.py
+HOW TO RUN THIS CODE:
+  1. Open PowerShell on your computer.
+  2. Make sure you are in the Python Parthenon folder:
+     cd "E:/Academy/Python Parthenon"
+  3. Type the following command and press Enter:
+     python 01_runtime_and_environments/2026-10-11_execs_runtime_probe.py
 """
 
 # ==============================================================================
-# STEP 1: The Foundation — Printing to the Screen
+# SECTION 1: What are Comments and What is `print()`?
 # ==============================================================================
-# In Python, `print(...)` is how you display text on your computer screen.
-print("==================================================")
-print("Welcome to the Python Parthenon!")
-print("==================================================")
+# Any line starting with a hash symbol (#) is a COMMENT.
+# Comments are notes written for humans. The Python interpreter completely ignores them!
+#
+# `print(...)` is Python's built-in command to display words onto your screen.
+# The quotation marks " " tell Python: "This is raw text, don't try to calculate it as math!"
+
+print("=" * 60)
+print("WELCOME TO THE PYTHON PARTHENON!")
+print("=" * 60)
 
 
 # ==============================================================================
-# STEP 2: Borrowing a Built-in Tool (`import sys`)
+# SECTION 2: What is `import` and What is `sys`?
 # ==============================================================================
-# Python comes with many built-in toolboxes. One of them is called `sys`.
-# `sys` stands for "system". It lets your code ask questions about your computer
-# and the Python program itself.
+# When you install Python, it brings along built-in toolboxes called "modules".
+# One of the most famous toolboxes is called `sys` (short for "system").
+# The word `import` tells Python: "Go grab the `sys` toolbox from your backpack so we can use it!"
+
 import sys
 
-# Let's ask Python what version it is:
+# Now that we imported `sys`, we can ask Python questions about itself:
+
+# Question 1: What version of Python are you?
+# `sys.version` gives us the exact version number of the interpreter program.
+python_version = sys.version.split()[0]
 print("\n[Question 1] Hey Python, what version are you?")
-print(f"-> Python says: I am version {sys.version.split()[0]}")
+print(f"-> Python says: I am Python version {python_version}!")
 
-# Let's ask Python where it is installed on your hard drive:
-print("\n[Question 2] Hey Python, where do you live on my computer?")
-print(f"-> Python says: My executable file is at:\n   {sys.executable}")
+
+# Question 2: Where do you live on my computer?
+# `sys.executable` tells us the exact folder where `python.exe` is stored.
+python_location = sys.executable
+print("\n[Question 2] Hey Python, where is your executable program located?")
+print(f"-> Python says: My python.exe file lives at:\n   {python_location}")
 
 
 # ==============================================================================
-# STEP 3: Checking if We Are in a Virtual Environment
+# SECTION 3: Are We Running in a Virtual Environment?
 # ==============================================================================
-# In our theory doc, we learned that a "virtual environment" is just a private
-# folder (.venv) for our project.
+# In our theory reading, we learned about Virtual Environments (.venv).
+# How does Python know if it is running inside a private project folder?
 #
-# Python knows if it's in a private folder by checking two values:
-# - sys.prefix: Where Python is currently running from.
-# - sys.base_prefix: Where the main Python on your computer is installed.
+# It looks at two addresses:
+# 1. `sys.prefix`      : The folder where Python is currently working from.
+# 2. `sys.base_prefix` : The folder where the main computer Python is installed.
 #
-# If they are EQUAL, you are using the main computer Python (not a private .venv yet).
-# If they are DIFFERENT, you are inside a private .venv!
+# If both addresses are IDENTICAL:
+# -> You are running on the main computer's Python (no private .venv active yet).
+# If the addresses are DIFFERENT:
+# -> You are running safely inside a private project .venv!
+
 print("\n[Question 3] Are we running inside a private virtual environment (.venv)?")
 if sys.prefix == sys.base_prefix:
-    print("-> Answer: NO. You are currently using your main Scoop Python.")
-    print("   (That is completely fine! We will learn how to make a .venv next.)")
+    print("-> Python says: NO.")
+    print("   We are currently using your computer's main Scoop Python.")
+    print("   (Don't worry! This is completely normal right now. We will create a .venv soon!)")
 else:
-    print("-> Answer: YES! You are running safely inside an isolated .venv.")
+    print("-> Python says: YES!")
+    print("   We are running safely inside a private project virtual environment.")
 
 
 # ==============================================================================
-# STEP 4: YOUR TURN TO EXPERIMENT! (A Mini-Exercise)
+# SECTION 4: YOUR FIRST HANDS-ON EXERCISE!
 # ==============================================================================
-# Below is a simple function called `greet_builder`.
-# A function is like a recipe: you give it some input, and it gives you a result.
-def greet_builder(architect_name: str) -> str:
-    """Take a name and return a warm welcome message."""
-    # TASK: You can customize this message if you want!
-    return f"Welcome, Architect {architect_name}, to the Python Parthenon!"
+# Now it's your turn to edit some code!
+# Below is a Python "function". A function is simply a mini-recipe with a name.
+# You give it some input, and it gives you back a result.
+
+def create_welcome_badge(architect_name: str) -> str:
+    """Take a name and return a custom welcome badge."""
+    # You can change the words inside the quotes below if you'd like!
+    return f"Official Badge: Architect {architect_name} has entered the Parthenon!"
 
 
-# Let's test the function:
-my_greeting = greet_builder("Navam")
-print(f"\n[Your Custom Greeting]:\n{my_greeting}")
-print("==================================================")
-print("[+] Script finished successfully!")
-print("==================================================")
+# ------------------------------------------------------------------------------
+# YOUR TASK:
+# Change the name "Navam" below to whatever name or title you prefer!
+# ------------------------------------------------------------------------------
+your_name = "Navam"
+badge = create_welcome_badge(your_name)
+
+print("\n" + "=" * 60)
+print(badge)
+print("=" * 60)
+print("\n[+] Congratulations! You have successfully run your first Parthenon script.")
+print("============================================================")
