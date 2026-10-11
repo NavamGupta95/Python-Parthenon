@@ -1,10 +1,10 @@
 """
-01_runtime_probe.py
-===================
+2026-10-11_execs_runtime_probe.py
+=================================
 Exercise: Inspecting Runtime Mechanics and Environment Isolation
 
 Theory Reference:
-  ../docs/01_execution_mechanics_and_environments.md
+  ./2026-10-11_docs_execution_mechanics_and_environments.md
 
 Learning Objective:
   Understand how CPython signals its environment state via `sys` and `site`,

@@ -20,19 +20,19 @@ Every topic explored in this repository follows a four-stage execution loop:
 
 ```mermaid
 flowchart LR
-    A["1. Theory & Mental Model\n(.md)"] --> B["2. Executable Harness\n(.py exercises)"]
+    A["1. Theory & Mental Model\n((date)_docs_(name).md)"] --> B["2. Executable Harness\n((date)_execs_(name).py)"]
     B --> C["3. Verification & Profiling\n(Tests / tracemalloc / timeit)"]
     C --> D["4. Cross-Referencing & Synthesis\n(Bidirectional Links)"]
     D -.-> A
 ```
 
-### 1. Conceptual Deep-Dive (`docs/*.md`)
+### 1. Conceptual Deep-Dive (`(date)_docs_(name).md`)
 - Explains the *why* and *how* behind the concept from first principles.
 - Includes memory/architectural flowcharts (using Mermaid).
 - Features code snippets dissecting edge cases and anti-patterns.
 - Direct links to official CPython documentation, PEPs, and canonical source references.
 
-### 2. Executable Challenge Harnesses (`exercises/*.py`)
+### 2. Executable Challenge Harnesses (`(date)_execs_(name).py`)
 - Practical problem files containing clear docstring specifications and type annotations.
 - Starter template functions and class skeletons.
 - Built-in test harnesses (assertion blocks or test runners) validating correctness and boundary conditions.
@@ -61,8 +61,8 @@ Python Parthenon/
 │
 └── <topic_module>/        # Created as topics are explored
     ├── README.md          # Topic overview and lesson roadmap
-    ├── docs/              # Detailed conceptual notes and diagrams
-    └── exercises/         # Executable problem harnesses and tests
+    ├── <YYYY-MM-DD>_docs_<topic>.md      # Conceptual notes and diagrams
+    └── <YYYY-MM-DD>_execs_<exercise>.py   # Executable problem harnesses and tests
 ```
 
 ---

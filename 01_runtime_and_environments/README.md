@@ -8,8 +8,8 @@ Understanding how Python boots, locates libraries, isolates dependencies, and in
 
 | Resource | Type | Purpose |
 | :--- | :--- | :--- |
-| [01_execution_mechanics_and_environments.md](./docs/01_execution_mechanics_and_environments.md) | **Deep-Dive Theory** | Mental models, OS path resolution, shims, `pyvenv.cfg`, environment taxonomy, Git boundaries, and comparative tradeoffs. |
-| [01_runtime_probe.py](./exercises/01_runtime_probe.py) | **Executable Lab** | Hands-on diagnostic script and challenges introspecting `sys.prefix`, `sys.base_prefix`, `sys.path`, and environment isolation. |
+| [2026-10-11_docs_execution_mechanics_and_environments.md](./2026-10-11_docs_execution_mechanics_and_environments.md) | **Deep-Dive Theory** | Mental models, OS path resolution, shims, `pyvenv.cfg`, environment taxonomy, Git boundaries, and comparative tradeoffs. |
+| [2026-10-11_execs_runtime_probe.py](./2026-10-11_execs_runtime_probe.py) | **Executable Lab** | Hands-on diagnostic script and challenges introspecting `sys.prefix`, `sys.base_prefix`, `sys.path`, and environment isolation. |
 
 ---
 
