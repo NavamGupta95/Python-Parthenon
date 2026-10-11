@@ -67,7 +67,16 @@ Python Parthenon/
 
 ---
 
+## 🗺️ Active Topic Modules
+
+| Module | Focus Area | Status |
+| :--- | :--- | :--- |
+| [01_runtime_and_environments](./01_runtime_and_environments/README.md) | OS PATH, Shims, CPython Boot, PEP 405 `pyvenv.cfg`, Git Boundaries, Tool Trade-Offs | In Progress |
+
+---
+
 ## 🛠️ Environment & Runtime
 
 - **Active Runtime**: Python 3.14+ (CPython)
 - **Tooling**: Built-in standard library, automated test runners, and isolated virtual environments.
+
