@@ -1,22 +1,20 @@
-# Module 01: Runtime Anatomy & Execution Environments
+# Module 01: How Python Runs & What Environments Are
 
-Understanding how Python boots, locates libraries, isolates dependencies, and interfaces with version control and the operating system.
-
----
-
-## 🗺️ Module Map
-
-| Resource | Type | Purpose |
-| :--- | :--- | :--- |
-| [2026-10-11_docs_execution_mechanics_and_environments.md](./2026-10-11_docs_execution_mechanics_and_environments.md) | **Deep-Dive Theory** | Mental models, OS path resolution, shims, `pyvenv.cfg`, environment taxonomy, Git boundaries, and comparative tradeoffs. |
-| [2026-10-11_execs_runtime_probe.py](./2026-10-11_execs_runtime_probe.py) | **Executable Lab** | Hands-on diagnostic script and challenges introspecting `sys.prefix`, `sys.base_prefix`, `sys.path`, and environment isolation. |
+Welcome to the very beginning. If all you know right now is `print("Hello, World!")`, you are in the exact right place.
 
 ---
 
-## 🎯 Learning Objectives
+## 🗺️ What's in This Module?
 
-By the end of this module, you will understand:
-1. **The Execution Path**: Exactly what happens between pressing `Enter` on `python myscript.py` and CPython executing bytecode.
-2. **Environment Detection**: The exact C-level mechanism (`pyvenv.cfg`) CPython uses to determine if it is in a virtual environment.
-3. **The Tooling Landscape**: When to choose `venv`, `uv`, `conda`, or `Docker`, and why global package installations are an anti-pattern.
-4. **Git Hygiene**: How environments interact with version control, why environments must never be committed, and how to track dependencies reproducibly with lockfiles and `pyproject.toml`.
+| File | What It Does |
+| :--- | :--- |
+| [2026-10-11_docs_execution_mechanics_and_environments.md](./2026-10-11_docs_execution_mechanics_and_environments.md) | **The Story of Python**: Plain-English explanations of how your computer runs code, what the terminal is, why we need environments, and how Git fits in. |
+| [2026-10-11_execs_runtime_probe.py](./2026-10-11_execs_runtime_probe.py) | **Hands-on Lab**: Your first interactive script to meet your Python interpreter, see where it lives, and write your first custom greeting function. |
+
+---
+
+## 🎯 What You Will Understand After This
+1. What Python actually does when you tell it to run a file.
+2. What the terminal (PowerShell) is and how it finds Python.
+3. Why programmers use "virtual environments" (and why they are just neat little folders).
+4. What belongs in GitHub and what stays on your computer.

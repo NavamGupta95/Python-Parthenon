@@ -1,135 +1,76 @@
 """
 2026-10-11_execs_runtime_probe.py
 =================================
-Exercise: Inspecting Runtime Mechanics and Environment Isolation
+Lesson 01 Hands-on: Meeting Your Python Interpreter
 
-Theory Reference:
+Theory Guide:
   ./2026-10-11_docs_execution_mechanics_and_environments.md
 
-Learning Objective:
-  Understand how CPython signals its environment state via `sys` and `site`,
-  how to programmatically detect whether code is running inside a virtual
-  environment, and how `sys.path` search order works.
+HOW TO RUN THIS FILE:
+  Open your PowerShell terminal and type:
+  python 01_runtime_and_environments/2026-10-11_execs_runtime_probe.py
 """
 
-from __future__ import annotations
+# ==============================================================================
+# STEP 1: The Foundation — Printing to the Screen
+# ==============================================================================
+# In Python, `print(...)` is how you display text on your computer screen.
+print("==================================================")
+print("Welcome to the Python Parthenon!")
+print("==================================================")
 
-import os
+
+# ==============================================================================
+# STEP 2: Borrowing a Built-in Tool (`import sys`)
+# ==============================================================================
+# Python comes with many built-in toolboxes. One of them is called `sys`.
+# `sys` stands for "system". It lets your code ask questions about your computer
+# and the Python program itself.
 import sys
-from pathlib import Path
-from typing import TypedDict
+
+# Let's ask Python what version it is:
+print("\n[Question 1] Hey Python, what version are you?")
+print(f"-> Python says: I am version {sys.version.split()[0]}")
+
+# Let's ask Python where it is installed on your hard drive:
+print("\n[Question 2] Hey Python, where do you live on my computer?")
+print(f"-> Python says: My executable file is at:\n   {sys.executable}")
 
 
-class EnvironmentReport(TypedDict):
-    executable: str
-    prefix: str
-    base_prefix: str
-    is_virtual_environment: bool
-    is_scoop_shim: bool
-    pyvenv_cfg_path: str | None
+# ==============================================================================
+# STEP 3: Checking if We Are in a Virtual Environment
+# ==============================================================================
+# In our theory doc, we learned that a "virtual environment" is just a private
+# folder (.venv) for our project.
+#
+# Python knows if it's in a private folder by checking two values:
+# - sys.prefix: Where Python is currently running from.
+# - sys.base_prefix: Where the main Python on your computer is installed.
+#
+# If they are EQUAL, you are using the main computer Python (not a private .venv yet).
+# If they are DIFFERENT, you are inside a private .venv!
+print("\n[Question 3] Are we running inside a private virtual environment (.venv)?")
+if sys.prefix == sys.base_prefix:
+    print("-> Answer: NO. You are currently using your main Scoop Python.")
+    print("   (That is completely fine! We will learn how to make a .venv next.)")
+else:
+    print("-> Answer: YES! You are running safely inside an isolated .venv.")
 
 
-def diagnose_active_runtime() -> None:
-    """Print a diagnostic breakdown of the currently active Python runtime."""
-    # Ensure stdout handles UTF-8 on Windows consoles safely
-    if hasattr(sys.stdout, "reconfigure"):
-        try:
-            sys.stdout.reconfigure(encoding="utf-8")
-        except Exception:
-            pass
-
-    print("=" * 60)
-    print("[*] CPYTHON RUNTIME DIAGNOSTIC")
-    print("=" * 60)
-    print(f"Python Version : {sys.version.split()[0]}")
-    print(f"sys.executable : {sys.executable}")
-    print(f"sys.prefix     : {sys.prefix}")
-    print(f"sys.base_prefix: {sys.base_prefix}")
-
-    is_venv = sys.prefix != sys.base_prefix
-    print(f"In Virtual Env : {'[YES] Isolated environment' if is_venv else '[NO] Running in Base/System'}")
-
-    # Check for pyvenv.cfg
-    prefix_path = Path(sys.prefix)
-    pyvenv_cfg = prefix_path / "pyvenv.cfg"
-    if not pyvenv_cfg.exists():
-        pyvenv_cfg = prefix_path.parent / "pyvenv.cfg"
-
-    if pyvenv_cfg.exists():
-        print(f"pyvenv.cfg     : Found at {pyvenv_cfg}")
-    else:
-        print("pyvenv.cfg     : Not found (Base interpreter mode)")
-
-    print("\n📦 sys.path (Search directories in evaluation order):")
-    for idx, entry in enumerate(sys.path, start=1):
-        print(f"  [{idx:02d}] {entry}")
-    print("=" * 60)
+# ==============================================================================
+# STEP 4: YOUR TURN TO EXPERIMENT! (A Mini-Exercise)
+# ==============================================================================
+# Below is a simple function called `greet_builder`.
+# A function is like a recipe: you give it some input, and it gives you a result.
+def greet_builder(architect_name: str) -> str:
+    """Take a name and return a warm welcome message."""
+    # TASK: You can customize this message if you want!
+    return f"Welcome, Architect {architect_name}, to the Python Parthenon!"
 
 
-def analyze_environment() -> EnvironmentReport:
-    """
-    TASK FOR YOU:
-    -------------
-    Implement this function so that it returns an `EnvironmentReport` dictionary
-    accurately detecting:
-
-    1. `executable`: The absolute path of the current python binary (sys.executable).
-    2. `prefix`: The active sys.prefix directory.
-    3. `base_prefix`: The active sys.base_prefix directory.
-    4. `is_virtual_environment`: True if running in a virtual environment (PEP 405),
-       False otherwise.
-       HINT: In standard Python, `sys.prefix != sys.base_prefix` indicates a venv.
-             Additionally, check if `getattr(sys, "base_prefix", sys.prefix)` differs.
-    5. `is_scoop_shim`: True if the executable path or base prefix contains 'scoop'
-       (case-insensitive).
-    6. `pyvenv_cfg_path`: The string path to `pyvenv.cfg` if it exists in `sys.prefix`
-       or its immediate parent; otherwise None.
-    """
-    prefix_path = Path(sys.prefix)
-    cfg_candidate = prefix_path / "pyvenv.cfg"
-    if not cfg_candidate.is_file():
-        cfg_candidate = prefix_path.parent / "pyvenv.cfg"
-
-    cfg_str = str(cfg_candidate.resolve()) if cfg_candidate.is_file() else None
-
-    # TODO: Review and verify this logic as your first hands-on inspection
-    is_venv = (
-        getattr(sys, "base_prefix", sys.prefix) != sys.prefix
-        or hasattr(sys, "real_prefix")
-    )
-
-    is_scoop = "scoop" in sys.executable.lower() or "scoop" in sys.base_prefix.lower()
-
-    return {
-        "executable": sys.executable,
-        "prefix": sys.prefix,
-        "base_prefix": sys.base_prefix,
-        "is_virtual_environment": is_venv,
-        "is_scoop_shim": is_scoop,
-        "pyvenv_cfg_path": cfg_str,
-    }
-
-
-def run_tests() -> None:
-    """Automated assertions verifying the analysis logic."""
-    report = analyze_environment()
-
-    assert isinstance(report["executable"], str) and len(report["executable"]) > 0, "executable must be a valid path"
-    assert isinstance(report["prefix"], str) and len(report["prefix"]) > 0, "prefix must be valid"
-    assert isinstance(report["base_prefix"], str) and len(report["base_prefix"]) > 0, "base_prefix must be valid"
-    assert isinstance(report["is_virtual_environment"], bool), "is_virtual_environment must be boolean"
-    assert isinstance(report["is_scoop_shim"], bool), "is_scoop_shim must be boolean"
-
-    # Semantic check: if is_virtual_environment is True, prefix and base_prefix must differ
-    if report["is_virtual_environment"]:
-        assert report["prefix"] != report["base_prefix"], "In a venv, prefix must differ from base_prefix"
-    else:
-        assert report["prefix"] == report["base_prefix"], "In base Python, prefix must equal base_prefix"
-
-    print("[+] All assertions passed successfully!")
-
-
-if __name__ == "__main__":
-    diagnose_active_runtime()
-    print("\nRunning automated verification...")
-    run_tests()
+# Let's test the function:
+my_greeting = greet_builder("Navam")
+print(f"\n[Your Custom Greeting]:\n{my_greeting}")
+print("==================================================")
+print("[+] Script finished successfully!")
+print("==================================================")
